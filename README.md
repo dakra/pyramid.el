@@ -13,6 +13,7 @@ web framework pyramid.
   - pyramid-request
   - pyramid-distreport
   - pyramid-serve
+* Function to create a new pyramid project from cookiecutter templates
 * Easily locate and jump to all your view definitions
 * Easily locate and jump to all your templates
 * Easily locate and jump to all your sqlalchemy models

@@ -83,6 +83,13 @@ When NIL use the package specified in the `pyramid-settings' file."
   :safe #'booleanp
   :group 'pyramid)
 
+(defcustom pyramid-cookiecutters (list "gh:Pylons/pyramid-cookiecutter-alchemy"
+                                       "gh:Pylons/pyramid-cookiecutter-starter"
+                                       "gh:Pylons/pyramid-cookiecutter-zodb")
+  "List of pyramid cookiecutter templates."
+  :type 'listp
+  :group 'pyramid)
+
 
 (defvar pyramid-request-methods
   (list "GET" "HEAD" "POST" "PUT" "PATCH" "DELETE" "PROPFIND" "OPTIONS")
@@ -279,6 +286,15 @@ user input.  HIST is a variable to store history of choices."
   (interactive)
   (find-file (expand-file-name pyramid-settings (pyramid-project-root))))
 
+;;;###autoload
+(defun pyramid-cookiecutter (dir template)
+  "Run cookiecutter on TEMPLATE from DIR."
+  (interactive (list (read-directory-name "Directory to run cookiecutter in: ")
+                     (completing-read "Cookiecutter: " pyramid-cookiecutters)))
+  (let ((default-directory dir))
+    (pop-to-buffer-same-window
+     (make-comint "Pyramid cookiecutter" (executable-find "cookiecutter") nil template))))
+
 (defun pyramid-ansi-color-filter ()
   "Handle ansi color escape sequences."
   (ansi-color-apply-on-region compilation-filter-start (point)))
@@ -431,6 +447,7 @@ When ARG is 2, force to run without '--reload' option regardless of the
 
 (defvar pyramid-command-map
   (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C") 'pyramid-cookiecutter)
     (define-key map (kbd "D") 'pyramid-distreport)
     (define-key map (kbd "R") 'pyramid-routes)
     (define-key map (kbd "S") 'pyramid-find-settings)
