@@ -1,0 +1,7 @@
+# -*- coding: utf-8; mode: snippet -*-
+# contributor: Daniel Kraus <daniel@kraus.my>
+# name: translate
+# key: _
+# group: pyramid
+# --
+_('$1')$0

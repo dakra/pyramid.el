@@ -1,0 +1,9 @@
+# -*- coding: utf-8; mode: snippet -*-
+# contributor: Daniel Kraus <daniel@kraus.my>
+# name: @view_config
+# key: @v
+# group: pyramid
+# --
+@view_config(route_name='${1:`(completing-read "Route name: " (-uniq (mapcar (lambda (c) (cdr (assoc 'name c))) (mapcar 'cdr (pyramid-get-views)))) nil nil nil 'pyramid-views-history)`}')
+def ${2:$1}(request):
+    $0

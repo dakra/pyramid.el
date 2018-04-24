@@ -90,6 +90,13 @@ When NIL use the package specified in the `pyramid-settings' file."
   :type 'listp
   :group 'pyramid)
 
+(defcustom pyramid-snippet-dir (expand-file-name
+                                (concat (file-name-directory (or load-file-name default-directory))
+                                        "./snippets"))
+  "Directory in which to locate Yasnippets for pyramid-mode."
+  :group 'pyramid
+  :type 'string)
+
 
 (defvar pyramid-request-methods
   (list "GET" "HEAD" "POST" "PUT" "PATCH" "DELETE" "PROPFIND" "OPTIONS")
@@ -515,6 +522,17 @@ When ARG is 2, force to run without '--reload' option regardless of the
     (tablist-revert)
     (switch-to-buffer (current-buffer))))
 
+;;;###autoload
+(defun pyramid-load-snippets()
+  "Load snippets if yasnippet is installed and pyramid-snippet-dir is set."
+  (interactive)
+  (when pyramid-snippet-dir
+    (cond
+     ((fboundp 'yas-load-directory)
+      (yas-load-directory pyramid-snippet-dir))
+     ((fboundp 'yas/load-directory)
+      (yas/load-directory pyramid-snippet-dir)))))
+
 (defvar pyramid-command-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C") 'pyramid-cookiecutter)
@@ -543,7 +561,8 @@ When ARG is 2, force to run without '--reload' option regardless of the
 
 \\{pyramid-mode-map}"
   :lighter " Pyramid"
-  :keymap pyramid-mode-map)
+  :keymap pyramid-mode-map
+  (pyramid-load-snippets))
 
 ;;;###autoload
 (define-globalized-minor-mode global-pyramid-mode pyramid-mode

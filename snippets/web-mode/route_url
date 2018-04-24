@@ -1,0 +1,7 @@
+# -*- coding: utf-8; mode: snippet -*-
+# contributor: Daniel Kraus <daniel@kraus.my>
+# name: request.route_url()
+# key: route
+# group: pyramid
+# --
+request.route_url('${1:`(completing-read "Route name: " (-uniq (mapcar (lambda (c) (cdr (assoc 'name c))) (mapcar 'cdr (pyramid-get-views)))) nil nil nil 'pyramid-views-history)`}') $0

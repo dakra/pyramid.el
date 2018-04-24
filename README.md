@@ -21,6 +21,7 @@ web framework pyramid.
   - Settings
 * Function to create a new pyramid project from cookiecutter templates
 * Run console scripts defined in your project
+* Add yasnippets for common pyramid tasks
 
 
 ## Configuration
