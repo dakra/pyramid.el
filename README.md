@@ -35,7 +35,12 @@ To detect if a file belongs to a pyramid project it's parent
 directories are searched for a file specified in the
 `pyramid-settings` variable which defaults to "development.ini".
 
-`M-x customize-variable RET pyramid-settings RET mysettings.ini`
+For some actions (like getting a list of console_scripts and
+sqlalchemy models) `pyramid.el` needs to know the package name
+of the pyramid project so it can import modules from it.
+This is done by calling `pyramid.paster.bootstrap` which could be
+slow in some cases. To prevent this expensive call you can
+set the package name yourself with `pyramid-package-name`.
 
 
 ## Usage
