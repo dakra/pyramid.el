@@ -166,8 +166,36 @@ for name, model in Base._decl_class_registry.items():
 print(dumps(models), end='')
 " "Python source code to get sqlalchemy models.")
 
-(defvar pyramid-views-history nil)
+(defvar pyramid-get-console-scripts-code "
+from __future__ import print_function
+from pkg_resources import get_entry_map
+from inspect import findsource, getsourcefile
+from json import dumps
+from os.path import realpath
 
+scripts = {}
+for name, entry in get_entry_map('%s', 'console_scripts').items():
+    func = entry.load()
+    scripts[name] = {
+        'name': entry.name,
+        'sourcefile': realpath(getsourcefile(func)),
+        'lineno': findsource(func)[1],
+    }
+print(dumps(scripts), end='')
+" "Python source code to get console scripts.")
+
+(defvar pyramid-run-console-script-code "
+from __future__ import print_function
+import re
+import sys
+from pkg_resources import load_entry_point
+sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
+sys.argv.append('%s')
+load_entry_point('%s', 'console_scripts', '%s')()
+" "Python source code to run a console script.")
+
+(defvar pyramid-console-scripts-history nil)
+(defvar pyramid-views-history nil)
 (defvar pyramid-sqlalchemy-models-history nil)
 
 
@@ -279,6 +307,48 @@ user input.  HIST is a variable to store history of choices."
   "Open template FILE."
   (interactive (list (completing-read "Template: " (pyramid-get-templates))))
   (find-file (expand-file-name file (pyramid-project-root))))
+
+(defun pyramid-get-console-scripts ()
+  "Execute and parse python code to get console-script definitions."
+  (pyramid-read (pyramid-call (format pyramid-get-console-scripts-code (pyramid-get-package-name)))))
+
+;;;###autoload
+(defun pyramid-find-console-script ()
+  "Jump to definition of a console-script that's selected from the prompt."
+  (interactive)
+  (pyramid-prompt-find-file-and-line
+   #'find-file "View: " (pyramid-get-console-scripts) 'pyramid-console-scripts-history))
+
+;;;###autoload
+(defun pyramid-run-console-script (script)
+  "Run a console SCRIPT that's selected from the prompt.
+The script will be passed the `pyramid-settings' filename as first argument."
+  (interactive
+   (list
+    (completing-read "Script to run: "
+                     (mapcar 'car (pyramid-get-console-scripts))
+                     nil t nil 'pyramid-console-scripts-history)))
+  (let* ((buffer (get-buffer-create "*Pyramid*"))
+         (process (get-buffer-process buffer)))
+    (when (and process (process-live-p process))
+      (setq buffer (generate-new-buffer "*Pyramid*")))
+    (with-current-buffer buffer
+      (hack-dir-local-variables-non-file-buffer)
+      (start-pythonic :process "pyramid"
+                      :buffer buffer
+                      :args (list "-c"
+                                  (format pyramid-run-console-script-code
+                                          pyramid-settings
+                                          (pyramid-get-package-name)
+                                          script))
+                      :cwd (pyramid-project-root)
+                      :filter (lambda (process string)
+                                (comint-output-filter process (ansi-color-apply string))))
+      (let ((inhibit-read-only t))
+        (erase-buffer))
+      (comint-mode)
+      (setq-local comint-prompt-read-only t)
+      (pop-to-buffer buffer))))
 
 ;;;###autoload
 (defun pyramid-find-settings ()
@@ -454,6 +524,8 @@ When ARG is 2, force to run without '--reload' option regardless of the
     (define-key map (kbd "T") 'pyramid-tweens)
     (define-key map (kbd "V") 'pyramid-views)
     (define-key map (kbd "X") 'pyramid-request)
+    (define-key map (kbd "!") 'pyramid-run-console-script)
+    (define-key map (kbd "c") 'pyramid-find-console-script)
     (define-key map (kbd "m") 'pyramid-find-sqlalchemy-model)
     (define-key map (kbd "s") 'pyramid-serve)
     (define-key map (kbd "t") 'pyramid-find-template)

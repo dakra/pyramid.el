@@ -13,10 +13,14 @@ web framework pyramid.
   - pyramid-request
   - pyramid-distreport
   - pyramid-serve
+* Easily locate and jump to all your "pyramid things"
+  - View definitions
+  - Templates
+  - Sqlalchemy models
+  - Console scripts
+  - Settings
 * Function to create a new pyramid project from cookiecutter templates
-* Easily locate and jump to all your view definitions
-* Easily locate and jump to all your templates
-* Easily locate and jump to all your sqlalchemy models
+* Run console scripts defined in your project
 
 
 ## Configuration
@@ -51,6 +55,8 @@ For example, open `/docker:root@container:/code/views.py` instead of
 | <kbd>C-c ' T</kbd> | pyramid-tweens                |
 | <kbd>C-c ' V</kbd> | pyramid-views                 |
 | <kbd>C-c ' X</kbd> | pyramid-request               |
+| <kbd>C-c ' !</kbd> | pyramid-run-console-script    |
+| <kbd>C-c ' c</kbd> | pyramid-find-console-script   |
 | <kbd>C-c ' m</kbd> | pyramid-find-sqlalchemy-model |
 | <kbd>C-c ' s</kbd> | pyramid-serve                 |
 | <kbd>C-c ' t</kbd> | pyramid-find-template         |
