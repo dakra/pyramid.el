@@ -93,7 +93,7 @@ When NIL use the package specified in the `pyramid-settings' file."
 (defcustom pyramid-snippet-dir (expand-file-name
                                 (concat (file-name-directory (or load-file-name default-directory))
                                         "./snippets"))
-  "Directory in which to locate Yasnippets for pyramid-mode."
+  "Directory in which to locate Yasnippets for pyramid."
   :group 'pyramid
   :type 'string)
 
@@ -415,7 +415,7 @@ information."
 (define-key pyramid-script-mode-map (kbd "n") #'compilation-next-error)
 
 (defun pyramid-compilation-start (command &optional no-settings &rest args)
-  "Start compilation mode of COMMAND with ARGS in pyramid-script-mode.
+  "Start compilation mode of COMMAND with ARGS in `pyramid-script-mode'.
 When NO-SETTINGS is set, don't pass pyramid settings as argument."
   (python-shell-with-environment
     (let ((command (concat
@@ -524,7 +524,7 @@ When ARG is 2, force to run without '--reload' option regardless of the
 
 ;;;###autoload
 (defun pyramid-load-snippets()
-  "Load snippets if yasnippet is installed and pyramid-snippet-dir is set."
+  "Load snippets if yasnippet is installed and `pyramid-snippet-dir' is set."
   (interactive)
   (when pyramid-snippet-dir
     (cond
