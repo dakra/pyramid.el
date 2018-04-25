@@ -388,11 +388,9 @@ back to `compilation-mode' you need to call
     (when (and output (string-match-p (concat "^" python-shell-prompt-pdb-regexp) output))
       (message "Entering pdb...")
       (setq buffer-read-only nil)
-      (let ((python-shell--interpreter nil)
-            (python-shell--interpreter-args nil))
-        (set-process-filter (get-buffer-process (current-buffer)) 'comint-output-filter)
-        (inferior-python-mode)
-        (run-hook-with-args 'comint-output-filter-functions output)))))
+      (set-process-filter (get-buffer-process (current-buffer)) 'comint-output-filter)
+      (inferior-python-mode)
+      (run-hook-with-args 'comint-output-filter-functions output))))
 
 (defun pyramid-back-to-compilation ()
   "Go back to compilation mode.
