@@ -1,7 +1,7 @@
 # Emacs minor mode for Pyramid
 
 This package provides utilities for working with the python
-web framework pyramid.
+web framework [pyramid](https://trypyramid.com/).
 
 
 ## Features
