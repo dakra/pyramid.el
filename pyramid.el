@@ -104,6 +104,10 @@ When NIL use the package specified in the `pyramid-settings' file."
 
 (defvar pyramid-get-views-code "
 from __future__ import print_function
+import os, sys
+stdout = sys.stdout
+sys.stdout = open(os.devnull, 'w')
+sys.stderr = open(os.devnull, 'w')
 from importlib import import_module
 from inspect import findsource, getsourcefile
 from json import dumps
@@ -137,18 +141,26 @@ for route in routes:
             'sourcefile': realpath(getsourcefile(getattr(module, attr, module))),
             'lineno': findsource(getattr(module, attr, module))[1],
         }
-print(dumps(mapped_routes), end='')
+print(dumps(mapped_routes), end='', file=stdout)
 " "Python source code to get views.")
 
 (defvar pyramid-get-package-name-code "
 from __future__ import print_function
+import os, sys
+stdout = sys.stdout
+sys.stdout = open(os.devnull, 'w')
+sys.stderr = open(os.devnull, 'w')
 from pyramid.paster import bootstrap
 env = bootstrap('%s')
-print(env['registry'].package_name, end='')
+print(env['registry'].package_name, end='', file=stdout)
 " "Python source code to get package name.")
 
 (defvar pyramid-get-sqlalchemy-models-code "
 from __future__ import print_function
+import os, sys
+stdout = sys.stdout
+sys.stdout = open(os.devnull, 'w')
+sys.stderr = open(os.devnull, 'w')
 from importlib import import_module
 from inspect import findsource, getsourcefile
 from json import dumps
@@ -170,11 +182,15 @@ for name, model in Base._decl_class_registry.items():
             'sourcefile': realpath(getsourcefile(model)),
             'lineno': findsource(model)[1],
     }
-print(dumps(models), end='')
+print(dumps(models), end='', file=stdout)
 " "Python source code to get sqlalchemy models.")
 
 (defvar pyramid-get-console-scripts-code "
 from __future__ import print_function
+import os, sys
+stdout = sys.stdout
+sys.stdout = open(os.devnull, 'w')
+sys.stderr = open(os.devnull, 'w')
 from pkg_resources import get_entry_map
 from inspect import findsource, getsourcefile
 from json import dumps
@@ -188,7 +204,7 @@ for name, entry in get_entry_map('%s', 'console_scripts').items():
         'sourcefile': realpath(getsourcefile(func)),
         'lineno': findsource(func)[1],
     }
-print(dumps(scripts), end='')
+print(dumps(scripts), end='', file=stdout)
 " "Python source code to get console scripts.")
 
 (defvar pyramid-run-console-script-code "
