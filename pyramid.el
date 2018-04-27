@@ -41,6 +41,7 @@
 
 (require 'ansi-color)
 (require 'compile)
+(require 'easymenu)
 (require 'json)
 (require 'python)
 (require 'pythonic)
@@ -567,6 +568,38 @@ When ARG is 2, force to run without '--reload' option regardless of the
   (let ((map (make-sparse-keymap)))
     (define-key map pyramid-keymap-prefix pyramid-command-map)
     map))
+
+(easy-menu-define pyramid-mode-menu pyramid-mode-map
+  "Menu for working with pyramid projects."
+  '("Pyramid"
+    ["Create new project" pyramid-cookiecutter
+     :help "Create a new project from a cookiecutter template"]
+    ["Distreport" pyramid-distreport
+     :help "Run pyramid script `pdistreport'"]
+    ["Routes" pyramid-routes
+     :help "Run pyramid script `proutes'"]
+    ["Serve" pyramid-serve
+     :help "Run pyramid script `pserve'"]
+    ["Tweens" pyramid-tweens
+     :help "Run pyramid script `ptweens'"]
+    ["Views" pyramid-views
+     :help "Run pyramid script `pviews'"]
+    ["Request" pyramid-request
+     :help "Run pyramid script `prequest'"]
+
+    ["Run console script" pyramid-run-console-script
+     :help "Run a user console script"]
+
+    ["Find console script" pyramid-find-sqlalchemy-model
+     :help "Select and navigate to a user console script"]
+    ["Find sqlalchemy model" pyramid-find-sqlalchemy-model
+     :help "Select and navigate to a sqlalchemy model definition"]
+    ["Find settings" pyramid-find-settings
+     :help "Navigate to the settings file"]
+    ["Find template" pyramid-find-template
+     :help "Select and navigate to a template"]
+    ["Find view" pyramid-find-view
+     :help "Select and navigate to a view definition."]))
 
 ;;;###autoload
 (define-minor-mode pyramid-mode
