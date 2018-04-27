@@ -53,6 +53,17 @@ For example, open `/docker:root@container:/code/views.py` instead of
 
 ### Project navigation
 
+`pyramid-keymap-prefix` + uppercase letter is for
+the pyramid p... scripts like `pserve`, `proutes` etc.
+
+`pyramid-keymap-prefix` + `!` lets you select and run
+one of your personal scripts defined in your setup.py
+`console_scripts` entry point.
+
+`pyramid-keymap-prefix` + lowercase letter is for
+navigation to quickly select and jump to
+views, templates, sqlalchemy models, etc.
+
 | Key                | Command                       |
 |--------------------|-------------------------------|
 | <kbd>C-c ' D</kbd> | pyramid-distreport            |
