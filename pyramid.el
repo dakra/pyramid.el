@@ -530,7 +530,6 @@ When ARG is 2, force to run without '--reload' option regardless of the
 (defun pyramid-routes ()
   "List routes."
   (interactive)
-  (pop-to-buffer "*Pyramid routes*")
   (with-current-buffer (get-buffer-create "*Pyramid routes*")
     (pyramid-routes-mode)
     (tablist-revert)
