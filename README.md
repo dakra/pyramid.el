@@ -57,14 +57,14 @@ For example, open `/docker:root@container:/code/views.py` instead of
 |--------------------|-------------------------------|
 | <kbd>C-c ' D</kbd> | pyramid-distreport            |
 | <kbd>C-c ' R</kbd> | pyramid-routes                |
-| <kbd>C-c ' S</kbd> | pyramid-find-settings         |
+| <kbd>C-c ' S</kbd> | pyramid-serve                 |
 | <kbd>C-c ' T</kbd> | pyramid-tweens                |
 | <kbd>C-c ' V</kbd> | pyramid-views                 |
 | <kbd>C-c ' X</kbd> | pyramid-request               |
 | <kbd>C-c ' !</kbd> | pyramid-run-console-script    |
 | <kbd>C-c ' c</kbd> | pyramid-find-console-script   |
 | <kbd>C-c ' m</kbd> | pyramid-find-sqlalchemy-model |
-| <kbd>C-c ' s</kbd> | pyramid-serve                 |
+| <kbd>C-c ' s</kbd> | pyramid-find-settings         |
 | <kbd>C-c ' t</kbd> | pyramid-find-template         |
 | <kbd>C-c ' v</kbd> | pyramid-find-view             |
 
