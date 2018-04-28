@@ -393,6 +393,10 @@ The script will be passed the `pyramid-settings' filename as first argument."
   "Handle ansi color escape sequences."
   (ansi-color-apply-on-region compilation-filter-start (point)))
 
+;; `python.el' variables introduced in Emacs 25.1
+(defvar python-shell--interpreter)
+(defvar python-shell--interpreter-args)
+
 (defun pyramid-track-pdb-prompt ()
   "Change compilation to `python-inferior-mode' when a pdb prompt is detected.
 
@@ -405,9 +409,11 @@ back to `compilation-mode' you need to call
     (when (and output (string-match-p (concat "^" python-shell-prompt-pdb-regexp) output))
       (message "Entering pdb...")
       (setq buffer-read-only nil)
-      (set-process-filter (get-buffer-process (current-buffer)) 'comint-output-filter)
-      (inferior-python-mode)
-      (run-hook-with-args 'comint-output-filter-functions output))))
+      (let ((python-shell--interpreter nil)
+            (python-shell--interpreter-args nil))
+        (set-process-filter (get-buffer-process (current-buffer)) 'comint-output-filter)
+        (inferior-python-mode)
+        (run-hook-with-args 'comint-output-filter-functions output)))))
 
 (defun pyramid-back-to-compilation ()
   "Go back to compilation mode.
