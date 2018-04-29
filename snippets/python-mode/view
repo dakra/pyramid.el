@@ -4,6 +4,6 @@
 # key: @v
 # group: pyramid
 # --
-@view_config(route_name='${1:`(completing-read "Route name: " (-uniq (mapcar (lambda (c) (cdr (assoc 'name c))) (mapcar 'cdr (pyramid-get-views)))) nil nil nil 'pyramid-views-history)`}')
-def ${2:$1}(request):
+@view_config(route_name='${1:$$(yas-choose-value (-uniq (mapcar (lambda (c) (cdr (assoc 'name c))) (mapcar 'cdr (pyramid-get-views)))))}'${2:, method='${3:$$(yas-choose-value '("GET" "POST" "PUT" "DELETE" "OPTIONS" "PATCH"))}'}${4:, permission='$5'})
+def ${6:$1}(request):
     $0
