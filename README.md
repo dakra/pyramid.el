@@ -24,6 +24,26 @@ web framework [pyramid](https://trypyramid.com/).
 * Add yasnippets for common pyramid tasks
 
 
+## Screenshots
+
+![pyramid-mode navigation](screenshots/pyramid-nav.gif)
+
+Use navigation features of `pyramid-mode` on a fresh
+tutorial project from the pyramid docs.
+- Find view
+- Find template
+- Find sqlalchemy model
+- Find settings
+
+![pyramid-mode pscripts](screenshots/pyramid-pscripts.gif)
+
+Show pyramid p*-script functions of `pyramid-mode`.
+- Show proutes (in tabulated list and jump to view)
+- Call ptweens
+- Select and call user console script
+- Call pserver
+
+
 ## Configuration
 
 See the `pyramid` customization group for settings:
