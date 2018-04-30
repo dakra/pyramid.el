@@ -241,7 +241,9 @@ load_entry_point('%s', 'console_scripts', '%s')()
     output))
 
 (defun pyramid-read (str)
-  "Read JSON from Python process output STR."
+  "Read JSON from Python process output STR.
+STR should be a dict where the dict key is a string
+that's presented to the user."
   (condition-case err
       (let ((result (json-read-from-string str)))
         (unless (json-alist-p result)
@@ -268,6 +270,11 @@ load_entry_point('%s', 'console_scripts', '%s')()
 
 (defun pyramid-find-file-and-line (func key collection)
   "Get KEY from COLLECTION and open it's definition.
+COLLECTION an alist of alists where KEY is the string
+describing the object (e.g. view-/template-/model-name)
+and the inner alist has at least `sourcefile' and
+`lineno' as entries which is the location we jump to.
+It's created by reading a json string with `pyramid-read'.
 FUNC is a function to open the file."
   (let* ((code (cdr (assoc key collection)))
          (value (cdr (assoc 'sourcefile code)))
