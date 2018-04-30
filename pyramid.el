@@ -55,48 +55,41 @@
 
 (defcustom pyramid-keymap-prefix (kbd "C-c '")
   "Pyramid keymap prefix."
-  :type 'key-sequence
-  :group 'pyramid)
+  :type 'key-sequence)
 
 (defcustom pyramid-settings "development.ini"
   "Pyramid settings file."
   :type 'string
-  :safe #'stringp
-  :group 'pyramid)
+  :safe #'stringp)
 
 (defcustom pyramid-project-root nil
   "Root of the pyramid project.
 When NIL it uses the path that contains the `pyramid-settings' file."
-  :type 'string
-  :safe #'stringp
-  :group 'pyramid)
+  :type 'directory
+  :safe #'directory-name-p)
 
 (defcustom pyramid-package-name nil
   "Package name of the pyramid project.
 When NIL use the package specified in the `pyramid-settings' file."
   :type 'string
-  :safe #'stringp
-  :group 'pyramid)
+  :safe #'stringp)
 
 (defcustom pyramid-serve-reload t
-  "If true, use `--reload' option by default when running `pyramid-serve'."
+  "If non-nil, use `--reload' option by default when running `pyramid-serve'."
   :type 'boolean
-  :safe #'booleanp
-  :group 'pyramid)
+  :safe #'booleanp)
 
 (defcustom pyramid-cookiecutters (list "gh:Pylons/pyramid-cookiecutter-alchemy"
                                        "gh:Pylons/pyramid-cookiecutter-starter"
                                        "gh:Pylons/pyramid-cookiecutter-zodb")
   "List of pyramid cookiecutter templates."
-  :type 'listp
-  :group 'pyramid)
+  :type '(repeat string))
 
 (defcustom pyramid-snippet-dir (expand-file-name
                                 (concat (file-name-directory (or load-file-name default-directory))
-                                        "./snippets"))
+                                        "./snippets/"))
   "Directory in which to locate Yasnippets for pyramid."
-  :group 'pyramid
-  :type 'string)
+  :type 'directory)
 
 
 (defvar pyramid-request-methods
