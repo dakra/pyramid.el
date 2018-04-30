@@ -225,17 +225,15 @@ load_entry_point('%s', 'console_scripts', '%s')()
 
 (defun pyramid-call (code &rest args)
   "Execute python CODE with ARGS.  Show errors if occurs."
-  (let (exit-code output)
-    (setq output
-          (with-output-to-string
-            (with-current-buffer
-                standard-output
-              (hack-dir-local-variables-non-file-buffer)
-              (setq exit-code
-                    (call-pythonic
-                     :buffer standard-output
-                     :args (append (list "-c" code) args)
-                     :cwd (pyramid-project-root))))))
+  (let* ((exit-code nil)
+         (output (with-output-to-string
+                   (with-current-buffer standard-output
+                     (hack-dir-local-variables-non-file-buffer)
+                     (setq exit-code
+                           (call-pythonic
+                            :buffer standard-output
+                            :args (append (list "-c" code) args)
+                            :cwd (pyramid-project-root)))))))
     (when (not (zerop exit-code))
       (pyramid-show-error output (format "Python exit with status code %d" exit-code)))
     output))
