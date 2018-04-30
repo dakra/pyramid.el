@@ -48,6 +48,9 @@
 (require 'subr-x)
 (require 'tablist)
 
+
+;;; Customization
+
 (defgroup pyramid nil
   "Pyramid framework integration"
   :prefix "pyramid-"
@@ -91,6 +94,8 @@ When NIL use the package specified in the `pyramid-settings' file."
   "Directory in which to locate Yasnippets for pyramid."
   :type 'directory)
 
+
+;;; Variables
 
 (defvar pyramid-request-methods
   (list "GET" "POST" "PUT" "PATCH" "DELETE" "OPTIONS" "HEAD" "PROPFIND")
@@ -215,6 +220,8 @@ load_entry_point('%s', 'console_scripts', '%s')()
 (defvar pyramid-views-history nil)
 (defvar pyramid-sqlalchemy-models-history nil)
 
+
+;;; Private helper functions
 
 (defun pyramid-call (code &rest args)
   "Execute python CODE with ARGS.  Show errors if occurs."
@@ -282,10 +289,18 @@ user input.  HIST is a variable to store history of choices."
    (intern (completing-read prompt (mapcar 'symbol-name (mapcar 'car collection)) nil t nil hist))
    collection))
 
+
+;;; Public functions
+
 (defun pyramid-project-root ()
   "Calculate project root."
   (or pyramid-project-root
       (locate-dominating-file default-directory pyramid-settings)))
+
+(defun pyramid-get-package-name ()
+  "Execute and parse python code to get the package name."
+  (or pyramid-package-name
+      (pyramid-call (format pyramid-get-package-name-code pyramid-settings))))
 
 (defun pyramid-get-views ()
   "Execute and parse python code to get view definitions."
@@ -296,10 +311,6 @@ user input.  HIST is a variable to store history of choices."
   "Jump to definition of a view that's selected from the prompt."
   (interactive)
   (pyramid-prompt-find-file-and-line #'find-file "View: " (pyramid-get-views) 'pyramid-views-history))
-
-(defun pyramid-get-package-name ()
-  "Execute and parse python code to get the package name."
-  (or pyramid-package-name (pyramid-call (format pyramid-get-package-name-code pyramid-settings))))
 
 (defun pyramid-get-sqlalchemy-models ()
   "Execute and parse python code to get sqlalchemy-model definitions."
@@ -382,6 +393,9 @@ The script will be passed the `pyramid-settings' filename as first argument."
     (pop-to-buffer-same-window
      (make-comint "Pyramid cookiecutter" (executable-find "cookiecutter") nil template))))
 
+
+;;; pyramid-script-mode
+
 (defun pyramid-ansi-color-filter ()
   "Handle ansi color escape sequences."
   (ansi-color-apply-on-region compilation-filter-start (point)))
@@ -440,6 +454,9 @@ When NO-SETTINGS is set, don't pass pyramid settings as argument."
       (compilation-start command
                          #'pyramid-script-mode
                          (lambda (_mode) (format "*Pyramid %s*" command))))))
+
+
+;;; Functions for pyramid scripts
 
 ;;;###autoload
 (defun pyramid-serve (&optional arg)
@@ -534,6 +551,9 @@ When ARG is 2, force to run without '--reload' option regardless of the
     (pyramid-routes-mode)
     (tablist-revert)
     (switch-to-buffer (current-buffer))))
+
+
+;;; pyramid-mode
 
 ;;;###autoload
 (defun pyramid-load-snippets()
