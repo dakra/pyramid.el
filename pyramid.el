@@ -93,7 +93,7 @@ When NIL use the package specified in the `pyramid-settings' file."
 
 
 (defvar pyramid-request-methods
-  (list "GET" "HEAD" "POST" "PUT" "PATCH" "DELETE" "PROPFIND" "OPTIONS")
+  (list "GET" "POST" "PUT" "PATCH" "DELETE" "OPTIONS" "HEAD" "PROPFIND")
   "List of allowed http methods for the prequest script.")
 
 (defvar pyramid-get-views-code "
