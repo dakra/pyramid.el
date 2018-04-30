@@ -274,7 +274,7 @@ FUNC is a function to open the file."
          (lineno (cdr (assoc 'lineno code))))
     (when (pythonic-remote-p)
       (setq value (concat (pythonic-tramp-connection) value)))
-    (apply func value nil)
+    (funcall func value nil)
     (goto-char (point-min))
     (forward-line lineno)
     (recenter)))
