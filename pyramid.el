@@ -244,7 +244,7 @@ load_entry_point('%s', 'console_scripts', '%s')()
   "Read JSON from Python process output STR."
   (condition-case err
       (let ((result (json-read-from-string str)))
-        (unless (listp result)
+        (unless (json-alist-p result)
           (signal 'json-error nil))
         result)
     ((json-error wrong-type-argument)
