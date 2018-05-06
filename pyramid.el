@@ -455,7 +455,7 @@ When NO-SETTINGS is set, don't pass pyramid settings as argument."
                     command " "
                     (unless no-settings
                       (concat (pyramid-project-root) pyramid-settings))
-                    " " (mapconcat 'identity args " "))))
+                    " " (mapconcat 'shell-quote-argument args " "))))
       (compilation-start command
                          #'pyramid-script-mode
                          (lambda (_mode) (format "*Pyramid %s*" command))))))
