@@ -558,7 +558,7 @@ When ARG is 2, force to run without '--reload' option regardless of the
     (switch-to-buffer (current-buffer))))
 
 
-;;; pyramid-mode
+;;; Yasnippets
 
 ;;;###autoload
 (defun pyramid-load-snippets()
@@ -570,6 +570,12 @@ When ARG is 2, force to run without '--reload' option regardless of the
       (yas-load-directory pyramid-snippet-dir))
      ((fboundp 'yas/load-directory)
       (yas/load-directory pyramid-snippet-dir)))))
+
+(with-eval-after-load 'yasnippet
+  (pyramid-load-snippets))
+
+
+;;; pyramid-mode
 
 (defvar pyramid-command-map
   (let ((map (make-sparse-keymap)))
@@ -631,8 +637,7 @@ When ARG is 2, force to run without '--reload' option regardless of the
 
 \\{pyramid-mode-map}"
   :lighter " Pyramid"
-  :keymap pyramid-mode-map
-  (pyramid-load-snippets))
+  :keymap pyramid-mode-map)
 
 ;;;###autoload
 (define-globalized-minor-mode global-pyramid-mode pyramid-mode
