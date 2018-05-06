@@ -639,7 +639,7 @@ When ARG is 2, force to run without '--reload' option regardless of the
   (lambda ()
     (ignore-errors
       (when (pyramid-project-root)
-        (pyramid-mode 1))))
+        (pyramid-mode))))
   :require 'pyramid)
 
 (provide 'pyramid)
