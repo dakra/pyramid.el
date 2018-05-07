@@ -454,7 +454,7 @@ When NO-SETTINGS is set, don't pass pyramid settings as argument."
     (let ((command (concat
                     command " "
                     (unless no-settings
-                      (concat (pyramid-project-root) pyramid-settings))
+                      (concat (expand-file-name (pyramid-project-root)) pyramid-settings))
                     " " (mapconcat 'shell-quote-argument args " "))))
       (compilation-start command
                          #'pyramid-script-mode
@@ -508,8 +508,8 @@ When ARG is 2, force to run without '--reload' option regardless of the
   (interactive (list (read-string "Path: ")
                      (completing-read "Method: " pyramid-request-methods nil t)))
   (apply #'pyramid-compilation-start "prequest" t
-         (list (format "-m %s" method)
-               (concat (pyramid-project-root) pyramid-settings)
+         (list "-m" method
+               (concat (expand-file-name (pyramid-project-root)) pyramid-settings)
                path)))
 
 (defun pyramid-routes-entries ()
