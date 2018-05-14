@@ -560,19 +560,20 @@ When ARG is 2, force to run without '--reload' option regardless of the
 
 ;;; Yasnippets
 
-;;;###autoload
-(defun pyramid-load-snippets()
-  "Load snippets if yasnippet is installed and `pyramid-snippet-dir' is set."
-  (interactive)
-  (when pyramid-snippet-dir
-    (cond
-     ((fboundp 'yas-load-directory)
-      (yas-load-directory pyramid-snippet-dir))
-     ((fboundp 'yas/load-directory)
-      (yas/load-directory pyramid-snippet-dir)))))
+(require 'yasnippet nil t)
 
+;;;###autoload
 (with-eval-after-load 'yasnippet
-  (pyramid-load-snippets))
+  ;; YAS doesn't provide a completion function
+  ;; where the user can also provide his own value.
+  ;; See: https://github.com/joaotavora/yasnippet/issues/934
+  (defun pyramid-yas-completing-read (&rest args)
+    (unless (or yas-moving-away-p
+                yas-modified-p)
+      (apply completing-read-function args)))
+
+  (when pyramid-snippet-dir
+    (yas-load-directory pyramid-snippet-dir)))
 
 
 ;;; pyramid-mode
