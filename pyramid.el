@@ -562,7 +562,6 @@ When ARG is 2, force to run without '--reload' option regardless of the
 
 (require 'yasnippet nil t)
 
-;;;###autoload
 (with-eval-after-load 'yasnippet
   ;; YAS doesn't provide a completion function
   ;; where the user can also provide his own value.
