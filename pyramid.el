@@ -60,6 +60,10 @@
   "Pyramid keymap prefix."
   :type 'key-sequence)
 
+(defcustom pyramid-recenter-after-jump t
+  "Recenter buffer after jumping to definition."
+  :type 'boolean)
+
 (defcustom pyramid-settings "development.ini"
   "Pyramid settings file."
   :type 'string
@@ -282,7 +286,8 @@ FUNC is a function to open the file."
     (funcall func value nil)
     (goto-char (point-min))
     (forward-line lineno)
-    (recenter)))
+    (when pyramid-recenter-after-jump
+      (recenter))))
 
 (defun pyramid-prompt-find-file-and-line (func prompt collection hist)
   "Ask user to select some name and open its definition at the line number.
