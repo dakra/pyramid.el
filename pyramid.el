@@ -481,7 +481,8 @@ When ARG is 2, force to run without '--reload' option regardless of the
 `pyramid-serve-reload' setting and when ARG is 3 always use reload."
   (interactive "p")
   (cond
-   ((eq arg 1) (pyramid-compilation-start "pserve" nil (when pyramid-serve-reload "--reload")))
+   ((or (not arg) (eq arg 1))
+    (pyramid-compilation-start "pserve" nil (when pyramid-serve-reload "--reload")))
    ((eq arg 2) (pyramid-compilation-start "pserve"))
    ((eq arg 3) (pyramid-compilation-start "pserve" nil "--reload"))
    ((eq arg 4) (pyramid-compilation-start "pserve" nil (unless pyramid-serve-reload "--reload")))
