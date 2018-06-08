@@ -54,7 +54,7 @@
 (defgroup pyramid nil
   "Pyramid framework integration"
   :prefix "pyramid-"
-  :group 'compilation)
+  :group 'tools)
 
 (defcustom pyramid-keymap-prefix (kbd "C-c '")
   "Pyramid keymap prefix."
