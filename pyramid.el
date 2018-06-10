@@ -60,9 +60,12 @@
   "Pyramid keymap prefix."
   :type 'key-sequence)
 
-(defcustom pyramid-recenter-after-jump t
-  "Recenter buffer after jumping to definition."
-  :type 'boolean)
+(defcustom pyramid-navigate-line-hook '(recenter)
+  "Hooks called after jumping to a place in the buffer.
+
+Useful things to use here include `reposition-window', `recenter', and
+\(lambda () (recenter 0)) to show at top of screen."
+  :type 'hook)
 
 (defcustom pyramid-settings "development.ini"
   "Pyramid settings file."
@@ -286,8 +289,7 @@ FUNC is a function to open the file."
     (funcall func value nil)
     (goto-char (point-min))
     (forward-line lineno)
-    (when pyramid-recenter-after-jump
-      (recenter))))
+    (run-hooks 'pyramid-navigate-line-hook)))
 
 (defun pyramid-prompt-find-file-and-line (func prompt collection hist)
   "Ask user to select some name and open its definition at the line number.
