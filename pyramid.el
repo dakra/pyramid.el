@@ -237,7 +237,7 @@ load_entry_point('%s', 'console_scripts', '%s')()
                    (with-current-buffer standard-output
                      (hack-dir-local-variables-non-file-buffer)
                      (setq exit-code
-                           (call-pythonic
+                           (pythonic-call-process
                             :buffer standard-output
                             :args (append (list "-c" code) args)
                             :cwd (pyramid-project-root)))))))
@@ -284,9 +284,7 @@ FUNC is a function to open the file."
   (let* ((code (cdr (assoc key collection)))
          (value (cdr (assoc 'sourcefile code)))
          (lineno (cdr (assoc 'lineno code))))
-    (when (pythonic-remote-p)
-      (setq value (concat (pythonic-tramp-connection) value)))
-    (funcall func value nil)
+    (funcall func (pythonic-real-file-name value) nil)
     (goto-char (point-min))
     (forward-line lineno)
     (run-hooks 'pyramid-navigate-line-hook)))
