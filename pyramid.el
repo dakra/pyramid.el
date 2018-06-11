@@ -108,12 +108,20 @@ When NIL use the package specified in the `pyramid-settings' file."
   (list "GET" "POST" "PUT" "PATCH" "DELETE" "OPTIONS" "HEAD" "PROPFIND")
   "List of allowed http methods for the prequest script.")
 
-(defvar pyramid-get-views-code "
+(defvar pyramid-wrapper-template "
 from __future__ import print_function
-import os, sys
+import os, sys, traceback
 stdout = sys.stdout
 sys.stdout = open(os.devnull, 'w')
 sys.stderr = open(os.devnull, 'w')
+try:
+    %s
+except Exception:
+    traceback.print_exc(None, stdout)
+    raise
+" "Try/except python wrapper to handle output redirection.")
+
+(defvar pyramid-get-views-code "
 from importlib import import_module
 from inspect import findsource, getsourcefile
 from json import dumps
@@ -151,22 +159,12 @@ print(dumps(mapped_routes), end='', file=stdout)
 " "Python source code to get views.")
 
 (defvar pyramid-get-package-name-code "
-from __future__ import print_function
-import os, sys
-stdout = sys.stdout
-sys.stdout = open(os.devnull, 'w')
-sys.stderr = open(os.devnull, 'w')
 from pyramid.paster import bootstrap
 env = bootstrap('%s')
 print(env['registry'].package_name, end='', file=stdout)
 " "Python source code to get package name.")
 
 (defvar pyramid-get-sqlalchemy-models-code "
-from __future__ import print_function
-import os, sys
-stdout = sys.stdout
-sys.stdout = open(os.devnull, 'w')
-sys.stderr = open(os.devnull, 'w')
 from importlib import import_module
 from inspect import findsource, getsourcefile
 from json import dumps
@@ -192,11 +190,6 @@ print(dumps(models), end='', file=stdout)
 " "Python source code to get sqlalchemy models.")
 
 (defvar pyramid-get-console-scripts-code "
-from __future__ import print_function
-import os, sys
-stdout = sys.stdout
-sys.stdout = open(os.devnull, 'w')
-sys.stderr = open(os.devnull, 'w')
 from pkg_resources import get_entry_map
 from inspect import findsource, getsourcefile
 from json import dumps
@@ -230,6 +223,11 @@ load_entry_point('%s', 'console_scripts', '%s')()
 
 ;;; Private helper functions
 
+(defun pyramid-wrap (code)
+  "Wrap CODE in try/except block."
+  (format pyramid-wrapper-template
+          (mapconcat 'identity (split-string code "\n") "\n    ")))
+
 (defun pyramid-call (code &rest args)
   "Execute python CODE with ARGS.  Show errors if occurs."
   (let* ((exit-code nil)
@@ -239,7 +237,7 @@ load_entry_point('%s', 'console_scripts', '%s')()
                      (setq exit-code
                            (pythonic-call-process
                             :buffer standard-output
-                            :args (append (list "-c" code) args)
+                            :args (append (list "-c" (pyramid-wrap code)) args)
                             :cwd (pyramid-project-root)))))))
     (when (not (zerop exit-code))
       (pyramid-show-error output (format "Python exit with status code %d" exit-code)))
