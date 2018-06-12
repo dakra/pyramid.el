@@ -282,7 +282,7 @@ FUNC is a function to open the file."
   (let* ((code (cdr (assoc key collection)))
          (value (cdr (assoc 'sourcefile code)))
          (lineno (cdr (assoc 'lineno code))))
-    (funcall func (pythonic-real-file-name value) nil)
+    (funcall func (pythonic-emacs-readable-file-name value) nil)
     (goto-char (point-min))
     (forward-line lineno)
     (run-hooks 'pyramid-navigate-line-hook)))
@@ -377,7 +377,7 @@ The script will be passed the `pyramid-settings' filename as first argument."
                                           pyramid-settings
                                           (pyramid-get-package-name)
                                           script))
-                      :cwd (pyramid-project-root)
+                      :cwd (pythonic-emacs-readable-file-name (pyramid-project-root))
                       :filter (lambda (process string)
                                 (comint-output-filter process (ansi-color-apply string))))
       (let ((inhibit-read-only t))
