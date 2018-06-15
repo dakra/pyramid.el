@@ -9,7 +9,7 @@
                           pyramid-yas-completing-read "Route name: "
                             (-uniq (mapcar (lambda (c) (cdr (assoc 'name c))) (mapcar 'cdr (pyramid-get-views))))
                             nil nil nil 'pyramid-views-history
-                          )}'${2:, method='${3:$$(yas-choose-value pyramid-request-methods)}'}${4:, permission='$5'})
+                          )}'${2:, method='${3:$$(yas-auto-next (yas-choose-value pyramid-request-methods))}'}${4:, permission='$5'})
 def ${6:$$(unless yas-modified-p
             (concat (replace-regexp-in-string "[^_[:alnum:]]" "_" (yas-field-value 1))
                     (unless (equal (yas-field-value 3) "") "_")
