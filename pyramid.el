@@ -392,16 +392,17 @@ The script will be passed the `pyramid-settings' filename as first argument."
       (setq buffer (generate-new-buffer "*Pyramid*")))
     (with-current-buffer buffer
       (hack-dir-local-variables-non-file-buffer)
-      (start-pythonic :process "pyramid"
-                      :buffer buffer
-                      :args (list "-c"
-                                  (format pyramid-run-console-script-code
-                                          pyramid-settings
-                                          (pyramid-get-package-name)
-                                          script))
-                      :cwd (pythonic-emacs-readable-file-name (pyramid-project-root))
-                      :filter (lambda (process string)
-                                (comint-output-filter process (ansi-color-apply string))))
+      (pythonic-start-process
+       :process "pyramid"
+       :buffer buffer
+       :args (list "-c"
+                   (format pyramid-run-console-script-code
+                           pyramid-settings
+                           (pyramid-get-package-name)
+                           script))
+       :cwd (pythonic-emacs-readable-file-name (pyramid-project-root))
+       :filter (lambda (process string)
+                 (comint-output-filter process (ansi-color-apply string))))
       (let ((inhibit-read-only t))
         (erase-buffer))
       (comint-mode)
