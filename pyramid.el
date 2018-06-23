@@ -320,6 +320,11 @@ user input.  HIST is a variable to store history of choices."
   (interactive)
   (pyramid-prompt-find-file-and-line #'find-file "View: " (pyramid-get-views) 'pyramid-views-history))
 
+(defun pyramid-find-view-other-window ()
+  "Jump to definition of a view that's selected from the prompt in other window."
+  (interactive)
+  (pyramid-prompt-find-file-and-line #'find-file-other-window "View: " (pyramid-get-views) 'pyramid-views-history))
+
 (defun pyramid-get-sqlalchemy-models ()
   "Execute and parse python code to get sqlalchemy-model definitions."
   (pyramid-read (pyramid-call
@@ -331,6 +336,12 @@ user input.  HIST is a variable to store history of choices."
   (interactive)
   (pyramid-prompt-find-file-and-line
    #'find-file "Model: " (pyramid-get-sqlalchemy-models) 'pyramid-sqlalchemy-models-history))
+
+(defun pyramid-find-sqlalchemy-model-other-window ()
+  "Jump to definition of a sqlalchemy-model that's selected from the prompt in other window."
+  (interactive)
+  (pyramid-prompt-find-file-and-line
+   #'find-file-other-window "Model: " (pyramid-get-sqlalchemy-models) 'pyramid-sqlalchemy-models-history))
 
 (defun pyramid-get-templates ()
   "Return all template files in project."
@@ -344,6 +355,11 @@ user input.  HIST is a variable to store history of choices."
   (interactive (list (completing-read "Template: " (pyramid-get-templates))))
   (find-file (expand-file-name file (pyramid-project-root))))
 
+(defun pyramid-find-template-other-window (file)
+  "Open template FILE in other window."
+  (interactive (list (completing-read "Template: " (pyramid-get-templates))))
+  (find-file-other-window (expand-file-name file (pyramid-project-root))))
+
 (defun pyramid-get-console-scripts ()
   "Execute and parse python code to get console-script definitions."
   (pyramid-read (pyramid-call (format pyramid-get-console-scripts-code (pyramid-get-package-name)))))
@@ -354,6 +370,12 @@ user input.  HIST is a variable to store history of choices."
   (interactive)
   (pyramid-prompt-find-file-and-line
    #'find-file "View: " (pyramid-get-console-scripts) 'pyramid-console-scripts-history))
+
+(defun pyramid-find-console-script-other-window ()
+  "Jump to definition of a console-script that's selected from the prompt in other window."
+  (interactive)
+  (pyramid-prompt-find-file-and-line
+   #'find-file-other-window "View: " (pyramid-get-console-scripts) 'pyramid-console-scripts-history))
 
 ;;;###autoload
 (defun pyramid-run-console-script (script)
@@ -391,6 +413,11 @@ The script will be passed the `pyramid-settings' filename as first argument."
   "Open the settings file."
   (interactive)
   (find-file (expand-file-name pyramid-settings (pyramid-project-root))))
+
+(defun pyramid-find-settings-other-window ()
+  "Open the settings file in other window."
+  (interactive)
+  (find-file-other-window (expand-file-name pyramid-settings (pyramid-project-root))))
 
 ;;;###autoload
 (defun pyramid-cookiecutter (dir template)
@@ -596,6 +623,11 @@ When ARG is 2, force to run without '--reload' option regardless of the
     (define-key map (kbd "s") 'pyramid-find-settings)
     (define-key map (kbd "t") 'pyramid-find-template)
     (define-key map (kbd "v") 'pyramid-find-view)
+    (define-key map (kbd "4 c") 'pyramid-find-console-script-other-window)
+    (define-key map (kbd "4 m") 'pyramid-find-sqlalchemy-model-other-window)
+    (define-key map (kbd "4 s") 'pyramid-find-settings-other-window)
+    (define-key map (kbd "4 t") 'pyramid-find-template-other-window)
+    (define-key map (kbd "4 v") 'pyramid-find-view-other-window)
     map))
 
 (defvar pyramid-mode-map
