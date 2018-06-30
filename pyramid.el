@@ -84,6 +84,10 @@ When NIL use the package specified in the `pyramid-settings' file."
   :type 'string
   :safe #'stringp)
 
+(defcustom pyramid-template-file-regex "\\.\\(mako?\\|jinja2?\\|j2\\|pt\\)\\'"
+  "Regex to use when looking for template files."
+  :type 'regexp)
+
 (defcustom pyramid-serve-reload t
   "If non-nil, use `--reload' option by default when running `pyramid-serve'."
   :type 'boolean
@@ -347,7 +351,7 @@ user input.  HIST is a variable to store history of choices."
   "Return all template files in project."
   (let ((proj-root (pyramid-project-root)))
     (mapcar (lambda (f) (file-relative-name f proj-root))
-            (directory-files-recursively proj-root "\\.\\(mako?\\|jinja2?\\|pt\\)\\'"))))
+            (directory-files-recursively proj-root pyramid-template-file-regex))))
 
 ;;;###autoload
 (defun pyramid-find-template (file)
