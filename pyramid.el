@@ -6,7 +6,7 @@
 ;; URL: https://github.com/dakra/pyramid.el
 ;; Keywords: python, pyramid, pylons, convenience, tools, processes
 ;; Version: 0.1
-;; Package-Requires: ((emacs "25.2") (pythonic "0.1.0"))
+;; Package-Requires: ((emacs "25.2") (pythonic "0.1.1") (tablist "0.70"))
 
 ;; This file is NOT part of GNU Emacs.
 
