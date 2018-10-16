@@ -71,18 +71,21 @@ Useful things to use here include `reposition-window', `recenter', and
   "Pyramid settings file."
   :type 'string
   :safe #'stringp)
+;;;###autoload(put 'pyramid-settings 'safe-local-variable #'stringp)
 
 (defcustom pyramid-project-root nil
   "Root of the pyramid project.
 When NIL it uses the path that contains the `pyramid-settings' file."
   :type 'directory
   :safe #'directory-name-p)
+;;;###autoload(put 'pyramid-project-root 'safe-local-variable #'directory-name-p)
 
 (defcustom pyramid-package-name nil
   "Package name of the pyramid project.
 When NIL use the package specified in the `pyramid-settings' file."
   :type 'string
   :safe #'stringp)
+;;;###autoload(put 'pyramid-package-name 'safe-local-variable #'stringp)
 
 (defcustom pyramid-template-file-regex "\\.\\(mako?\\|jinja2?\\|j2\\|pt\\)\\'"
   "Regex to use when looking for template files."
