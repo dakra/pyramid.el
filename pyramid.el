@@ -465,6 +465,14 @@ back to `compilation-mode' you need to call
         (inferior-python-mode)
         (run-hook-with-args 'comint-output-filter-functions output)))))
 
+(defun pyramid-shell ()
+  "Start a pyramid pshell."
+  (interactive)
+  (run-python (concat "pshell "
+                      (concat (expand-file-name (pyramid-project-root)) pyramid-settings)
+                      " -p python"))
+  (rename-buffer "*Pyramid shell*"))
+
 (defun pyramid-back-to-compilation ()
   "Go back to compilation mode.
 
@@ -620,6 +628,7 @@ When ARG is 2, force to run without '--reload' option regardless of the
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C") 'pyramid-cookiecutter)
     (define-key map (kbd "D") 'pyramid-distreport)
+    (define-key map (kbd "P") 'pyramid-shell)
     (define-key map (kbd "R") 'pyramid-routes)
     (define-key map (kbd "S") 'pyramid-serve)
     (define-key map (kbd "T") 'pyramid-tweens)
@@ -654,6 +663,8 @@ When ARG is 2, force to run without '--reload' option regardless of the
      :help "Run pyramid script `proutes'"]
     ["Serve" pyramid-serve
      :help "Run pyramid script `pserve'"]
+    ["Shell" pyramid-shell
+     :help "Run pyramid script `pshell'"]
     ["Tweens" pyramid-tweens
      :help "Run pyramid script `ptweens'"]
     ["Views" pyramid-views

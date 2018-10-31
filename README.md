@@ -13,6 +13,7 @@ web framework [pyramid](https://trypyramid.com/).
   - pyramid-request
   - pyramid-distreport
   - pyramid-serve
+  - pyramid-shell
 * Easily locate and jump to all your "pyramid things"
   - View definitions
   - Templates
@@ -39,9 +40,9 @@ tutorial project from the pyramid docs.
 
 Show pyramid p*-script functions of `pyramid-mode`.
 - Show proutes (in tabulated list and jump to view)
-- Call ptweens
+- Call `ptweens`
 - Select and call user console script
-- Call pserver
+- Call `pserver`
 
 
 ## Configuration
@@ -87,6 +88,7 @@ views, templates, sqlalchemy models, etc.
 | Key                | Command                       |
 |--------------------|-------------------------------|
 | <kbd>C-c ' D</kbd> | pyramid-distreport            |
+| <kbd>C-c ' P</kbd> | pyramid-shell                 |
 | <kbd>C-c ' R</kbd> | pyramid-routes                |
 | <kbd>C-c ' S</kbd> | pyramid-serve                 |
 | <kbd>C-c ' T</kbd> | pyramid-tweens                |
