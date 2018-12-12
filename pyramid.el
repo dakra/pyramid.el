@@ -307,6 +307,7 @@ user input.  HIST is a variable to store history of choices."
 
 ;;; Public functions
 
+;;;###autoload
 (defun pyramid-project-root ()
   "Calculate project root."
   (or pyramid-project-root
