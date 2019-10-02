@@ -3,6 +3,9 @@
 This package provides utilities for working with the python
 web framework [pyramid](https://trypyramid.com/).
 
+## Install
+
+You can install it from [MELPA](https://melpa.org/#/pyramid)
 
 ## Features
 
