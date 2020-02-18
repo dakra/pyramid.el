@@ -1,3 +1,7 @@
+[![Melpa](https://melpa.org/packages/pyramid-badge.svg)](https://melpa.org/#/pyramid)
+[![Melpa Stable](https://stable.melpa.org/packages/pyramid-badge.svg)](https://stable.melpa.org/#/pyramid)
+[![GPLv3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
+
 # Emacs minor mode for Pyramid
 
 This package provides utilities for working with the python
