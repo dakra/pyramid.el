@@ -7,6 +7,7 @@
 ;; Keywords: python, pyramid, pylons, convenience, tools, processes
 ;; Version: 0.1
 ;; Package-Requires: ((emacs "25.2") (pythonic "0.1.1") (tablist "0.70"))
+;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;; This file is NOT part of GNU Emacs.
 
