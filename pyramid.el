@@ -1,6 +1,6 @@
 ;;; pyramid.el --- Minor mode for working with pyramid projects  -*- lexical-binding: t -*-
 
-;; Copyright (c) 2018 Daniel Kraus <daniel@kraus.my>
+;; Copyright (c) 2018-2023 Daniel Kraus <daniel@kraus.my>
 
 ;; Author: Daniel Kraus <daniel@kraus.my>
 ;; URL: https://github.com/dakra/pyramid.el
